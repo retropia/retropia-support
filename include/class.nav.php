@@ -1,5 +1,4 @@
-<?php
-/*********************************************************************
+<?php /*********************************************************************
     class.nav.php
 
     Navigation helper classes. Pointless BUT helps keep navigation clean and free from errors.

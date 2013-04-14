@@ -1,5 +1,4 @@
-<?php
-/*********************************************************************
+<?php /*********************************************************************
     index.php
 
     Helpdesk landing page. Please customize it to fit your needs.
@@ -61,4 +60,4 @@ require(CLIENTINC_DIR.'header.inc.php');
 		</div>
 	</div>
 
-<?require(CLIENTINC_DIR.'footer.inc.php'); ?>
+<?php require(CLIENTINC_DIR.'footer.inc.php'); ?>

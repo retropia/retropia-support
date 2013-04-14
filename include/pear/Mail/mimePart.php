@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * The Mail_mimePart class is used to create MIME E-mail messages
  *
  * This class enables you to manipulate and build a mime email

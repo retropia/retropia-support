@@ -1,5 +1,4 @@
-<?php
-if(!defined('OSTSCPINC') or !is_object($thisuser) or !$thisuser->canManageKb()) die('Access Denied');
+<?php if(!defined('OSTSCPINC') or !is_object($thisuser) or !$thisuser->canManageKb()) die('Access Denied');
 
 //List premade answers.
 $select='SELECT premade.*,dept_name ';
@@ -54,33 +53,33 @@ $results_type=($search)?'Search Results':'Premade/Canned Replies';
 $negorder=$order=='DESC'?'ASC':'DESC'; //Negate the sorting..
 ?>
 <div>
-    <?if($errors['err']) {?>
-        <p align="center" id="errormessage"><?=$errors['err']?></p>
-    <?}elseif($msg) {?>
-        <p align="center" id="infomessage"><?=$msg?></p>
-    <?}elseif($warn) {?>
-        <p id="warnmessage"><?=$warn?></p>
-    <?}?>
+    <?php if($errors['err']) {?>
+        <p align="center" id="errormessage"><?php echo $errors['err']?></p>
+    <?php }elseif($msg) {?>
+        <p align="center" id="infomessage"><?php echo $msg?></p>
+    <?php }elseif($warn) {?>
+        <p id="warnmessage"><?php echo $warn?></p>
+    <?php }?>
 </div>
 <div align="left">
     <form action="kb.php" method="GET" >
     <input type='hidden' name='a' value='search'>
-    Search for:&nbsp;<input type="text" name="query" value="<?=Format::htmlchars($_REQUEST['query'])?>">
+    Search for:&nbsp;<input type="text" name="query" value="<?php echo Format::htmlchars($_REQUEST['query'])?>">
     category
     <select name="dept">
             <option value=0>All Departments</option>
-            <?
+            <?php 
             $depts= db_query('SELECT dept_id,dept_name FROM '.DEPT_TABLE.' WHERE dept_id!='.db_input($ticket['dept_id']));
             while (list($deptId,$deptName) = db_fetch_row($depts)){
                 $selected = ($_GET['dept']==$deptId)?'selected':''; ?>
-                <option value="<?=$deptId?>"<?=$selected?>>&nbsp;&nbsp;<?=$deptName?></option>
-           <?}?>
+                <option value="<?php echo $deptId?>"<?php echo $selected?>>&nbsp;&nbsp;<?php echo $deptName?></option>
+           <?php }?>
     </select>
     &nbsp;
     <input type="submit" name="search" class="button" value="GO">
     </form>
 </div>
-<div class="msg"><?=$result_type?>&nbsp;<?=$showing?></div>
+<div class="msg"><?php echo $result_type?>&nbsp;<?php echo $showing?></div>
 <table width="100%" border="0" cellspacing=1 cellpadding=2>
    <form action="kb.php" method="POST" name="premade" onSubmit="return checkbox_checker(document.forms['premade'],1,0);">
    <input type=hidden name='a' value='process'>
@@ -89,13 +88,13 @@ $negorder=$order=='DESC'?'ASC':'DESC'; //Negate the sorting..
         <tr>
 	        <th width="7px">&nbsp;</th>
 	        <th>
-                <a href="kb.php?sort=title&order=<?=$negorder?><?=$qstr?>" title="Sort By Title <?=$negorder?>">Reply Title</a></th>
+                <a href="kb.php?sort=title&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Title <?php echo $negorder?>">Reply Title</a></th>
             <th width=50>Status</th>
 	        <th width=200>Category/Dept</th> 
 	        <th width=150 nowrap>
-                <a href="kb.php?sort=updatedate&order=<?=$negorder?><?=$qstr?>" title="Sort By Update Date <?=$negorder?>">Last Updated</a></th>
+                <a href="kb.php?sort=updatedate&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Update Date <?php echo $negorder?>">Last Updated</a></th>
         </tr>
-        <?
+        <?php 
         $class = 'row1';
         $total=0;
         $grps=($errors && is_array($_POST['grps']))?$_POST['grps']:null;
@@ -109,25 +108,25 @@ $negorder=$order=='DESC'?'ASC':'DESC'; //Negate the sorting..
                     $class="$class highlight";
                 }
                 ?>
-            <tr class="<?=$class?>" id="<?=$row['premade_id']?>">
+            <tr class="<?php echo $class?>" id="<?php echo $row['premade_id']?>">
                 <td width=7px>
-                  <input type="checkbox" name="canned[]" value="<?=$row['premade_id']?>" <?=$sel?'checked':''?> 
+                  <input type="checkbox" name="canned[]" value="<?php echo $row['premade_id']?>" <?php echo $sel?'checked':''?> 
                         onClick="highLight(this.value,this.checked);">
-                <td><a href="kb.php?id=<?=$row['premade_id']?>"><?=Format::htmlchars(Format::truncate($row['title'],60))?></a></td>
-                <td><b><?=$row['isenabled']?'Active':'Disabled'?></b></td>
-                <td><?=$row['dept_name']?Format::htmlchars($row['dept_name']):'All Departments'?></td>
-                <td><?=Format::db_datetime($row['updated'])?></td>
+                <td><a href="kb.php?id=<?php echo $row['premade_id']?>"><?php echo Format::htmlchars(Format::truncate($row['title'],60))?></a></td>
+                <td><b><?php echo $row['isenabled']?'Active':'Disabled'?></b></td>
+                <td><?php echo $row['dept_name']?Format::htmlchars($row['dept_name']):'All Departments'?></td>
+                <td><?php echo Format::db_datetime($row['updated'])?></td>
             </tr>
-            <?
+            <?php 
             $class = ($class =='row2') ?'row1':'row2';
             } //end of while.
         else: //nothin' found!! ?> 
-            <tr class="<?=$class?>"><td colspan=6><b>Query returned 0 results</b></td></tr>
-        <?
+            <tr class="<?php echo $class?>"><td colspan=6><b>Query returned 0 results</b></td></tr>
+        <?php 
         endif; ?>
     </table>
    </td></tr>
-   <?
+   <?php 
    if(db_num_rows($replies)>0): //Show options..
     ?>
    <tr><td style="padding-left:20px">
@@ -135,7 +134,7 @@ $negorder=$order=='DESC'?'ASC':'DESC'; //Negate the sorting..
         <a href="#" onclick="return select_all(document.forms['premade'],true)">All</a>&nbsp;
         <a href="#" onclick="return toogle_all(document.forms['premade'],true)">Toggle</a>&nbsp;
         <a href="#" onclick="return reset_all(document.forms['premade'])">None</a>&nbsp;
-        &nbsp;page:<?=$pageNav->getPageLinks()?>&nbsp;
+        &nbsp;page:<?php echo $pageNav->getPageLinks()?>&nbsp;
     </td></td>
     <tr><td align="center">
             <input class="button" type="submit" name="enable" value="Enable" 
@@ -145,7 +144,7 @@ $negorder=$order=='DESC'?'ASC':'DESC'; //Negate the sorting..
             <input class="button" type="submit" name="delete" value="Delete" 
                 onClick='return confirm("Are you sure you want to DELETE selected entries?");'>
     </td></td>
-    <?
+    <?php 
     endif;
     ?>
    </form>

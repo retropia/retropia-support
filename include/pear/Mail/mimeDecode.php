@@ -1,5 +1,4 @@
-<?php
-/**
+<?php /**
  * The Mail_mimeDecode class is used to decode mail/mime messages
  *
  * This class will parse a raw mime email and return

@@ -1,5 +1,4 @@
-<?php
-if(!defined('OSTADMININC') || !$thisuser->isadmin()) die('Access Denied');
+<?php if(!defined('OSTADMININC') || !$thisuser->isadmin()) die('Access Denied');
 
 
 $info['phrase']=($errors && $_POST['phrase'])?Format::htmlchars($_POST['phrase']):$cfg->getAPIPassphrase();
@@ -34,7 +33,7 @@ $deletable=0;
 ?>
 <div class="msg">API Keys</div>
 <hr>
-<div><b><?=$showing?></b></div>
+<div><b><?php echo $showing?></b></div>
  <table width="100%" border="0" cellspacing=1 cellpadding=2>
    <form action="admin.php?t=api" method="POST" name="api" onSubmit="return checkbox_checker(document.forms['api'],1,0);">
    <input type=hidden name='t' value='api'>
@@ -47,9 +46,9 @@ $deletable=0;
             <th width="10" nowrap>Active</th>
             <th width="100" nowrap>&nbsp;&nbsp;IP Address</th>
 	        <th width="150" nowrap>&nbsp;&nbsp;
-                <a href="admin.php?t=api&sort=date&order=<?=$negorder?><?=$qstr?>" title="Sort By Create Date <?=$negorder?>">Created</a></th>
+                <a href="admin.php?t=api&sort=date&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Create Date <?php echo $negorder?>">Created</a></th>
         </tr>
-        <?
+        <?php 
         $class = 'row1';
         $total=0;
         $active=$inactive=0;
@@ -69,47 +68,45 @@ $deletable=0;
                     $sel=true;
                 }
                 ?>
-            <tr class="<?=$class?>" id="<?=$row['id']?>">
+            <tr class="<?php echo $class?>" id="<?php echo $row['id']?>">
                 <td width=7px>
-                  <input type="checkbox" name="ids[]" value="<?=$row['id']?>" <?=$sel?'checked':''?>
+                  <input type="checkbox" name="ids[]" value="<?php echo $row['id']?>" <?php echo $sel?'checked':''?>
                         onClick="highLight(this.value,this.checked);">
-                <td>&nbsp;<?=$row['apikey']?></td>
-                <td><?=$row['isactive']?'<b>Yes</b>':'No'?></td>
-                <td>&nbsp;<?=$row['ipaddr']?></td>
-                <td>&nbsp;<?=Format::db_datetime($row['created'])?></td>
+                <td>&nbsp;<?php echo $row['apikey']?></td>
+                <td><?php echo $row['isactive']?'<b>Yes</b>':'No'?></td>
+                <td>&nbsp;<?php echo $row['ipaddr']?></td>
+                <td>&nbsp;<?php echo Format::db_datetime($row['created'])?></td>
             </tr>
-            <?
+            <?php 
             $class = ($class =='row2') ?'row1':'row2';
             } //end of while.
         else: //nothin' found!! ?> 
-            <tr class="<?=$class?>"><td colspan=5><b>Query returned 0 results</b>&nbsp;&nbsp;<a href="admin.php?t=templates">Index list</a></td></tr>
-        <?
+            <tr class="<?php echo $class?>"><td colspan=5><b>Query returned 0 results</b>&nbsp;&nbsp;<a href="admin.php?t=templates">Index list</a></td></tr>
+        <?php 
         endif; ?>
      
      </table>
     </td></tr>
-    <?
+    <?php 
     if(db_num_rows($result)>0): //Show options..
      ?>
     <tr>
         <td align="center">
-            <?php
-            if($inactive) {?>
+            <?php             if($inactive) {?>
                 <input class="button" type="submit" name="enable" value="Enable"
                      onClick='return confirm("Are you sure you want to ENABLE selected keys?");'>
-            <?php
-            }
+            <?php             }
             if($active){?>
             &nbsp;&nbsp;
                 <input class="button" type="submit" name="disable" value="Disable"
                      onClick='return confirm("Are you sure you want to DISABLE selected keys?");'>
-            <?}?>
+            <?php }?>
             &nbsp;&nbsp;
             <input class="button" type="submit" name="delete" value="Delete" 
                      onClick='return confirm("Are you sure you want to DELETE selected keys?");'>
         </td>
     </tr>
-    <?
+    <?php 
     endif;
     ?>
     </form>
@@ -118,12 +115,12 @@ $deletable=0;
  <div class="msg">Add New IP</div>
  <hr>
  <div>
-   Add a new IP address.&nbsp;&nbsp;<font class="error"><?=$errors['ip']?></font>
+   Add a new IP address.&nbsp;&nbsp;<font class="error"><?php echo $errors['ip']?></font>
    <form action="admin.php?t=api" method="POST" >
     <input type=hidden name='t' value='api'>
     <input type=hidden name='do' value='add'>
     New IP:
-    <input name="ip" size=30 value="<?=($errors['ip'])?Format::htmlchars($_REQUEST['ip']):''?>" />
+    <input name="ip" size=30 value="<?php echo ($errors['ip'])?Format::htmlchars($_REQUEST['ip']):''?>" />
     <font class="error">*&nbsp;</font>&nbsp;&nbsp;
      &nbsp;&nbsp; <input class="button" type="submit" name="add" value="Add">
     </form>
@@ -137,8 +134,8 @@ $deletable=0;
     <input type=hidden name='t' value='api'>
     <input type=hidden name='do' value='update_phrase'>
     Phrase:
-    <input name="phrase" size=50 value="<?=Format::htmlchars($info['phrase'])?>" />
-    <font class="error">*&nbsp;<?=$errors['phrase']?></font>&nbsp;&nbsp;
+    <input name="phrase" size=50 value="<?php echo Format::htmlchars($info['phrase'])?>" />
+    <font class="error">*&nbsp;<?php echo $errors['phrase']?></font>&nbsp;&nbsp;
      &nbsp;&nbsp; <input class="button" type="submit" name="update" value="Submit">
     </form>
     <br/><br/>

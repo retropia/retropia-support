@@ -11,7 +11,7 @@
 <body id="loginBody">
 <div id="loginBox">
 	<h1 id="logo"><a href="index.php">osTicket Staff Control Panel</a></h1>
-	<h1><?=$msg?></h1>
+	<h1><?php echo $msg?></h1>
 	<br />
 	<form action="login.php" method="post">
 	<input type="hidden" name=do value="scplogin" />

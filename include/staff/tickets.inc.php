@@ -1,5 +1,4 @@
-<?php
-if(!defined('OSTSCPINC') || !@$thisuser->isStaff()) die('Access Denied');
+<?php if(!defined('OSTSCPINC') || !@$thisuser->isStaff()) die('Access Denied');
 
 //Get ready for some deep shit..(I admit..this could be done better...but the shit just works... so shutup for now).
 
@@ -249,37 +248,37 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
 //YOU BREAK IT YOU FIX IT.
 ?>
 <div>
-    <?if($errors['err']) {?>
-        <p align="center" id="errormessage"><?=$errors['err']?></p>
-    <?}elseif($msg) {?>
-        <p align="center" id="infomessage"><?=$msg?></p>
-    <?}elseif($warn) {?>
-        <p id="warnmessage"><?=$warn?></p>
-     <?}?>
+    <?php if($errors['err']) {?>
+        <p align="center" id="errormessage"><?php echo $errors['err']?></p>
+    <?php }elseif($msg) {?>
+        <p align="center" id="infomessage"><?php echo $msg?></p>
+    <?php }elseif($warn) {?>
+        <p id="warnmessage"><?php echo $warn?></p>
+     <?php }?>
 </div>
 <!-- SEARCH FORM START -->
-<div id='basic' style="display:<?=$basic_display?'block':'none'?>">
+<div id='basic' style="display:<?php echo $basic_display?'block':'none'?>">
     <form action="tickets.php" method="get">
     <input type="hidden" name="a" value="search">
     <table>
         <tr>
             <td>Query: </td>
-            <td><input type="text" id="query" name="query" size=30 value="<?=Format::htmlchars($_REQUEST['query'])?>"></td>
+            <td><input type="text" id="query" name="query" size=30 value="<?php echo Format::htmlchars($_REQUEST['query'])?>"></td>
             <td><input type="submit" name="basic_search" class="button" value="Search">
              &nbsp;[<a href="#" onClick="showHide('basic','advance'); return false;">Advanced</a> ] </td>
         </tr>
     </table>
     </form>
 </div>
-<div id='advance' style="display:<?=$basic_display?'none':'block'?>">
+<div id='advance' style="display:<?php echo $basic_display?'none':'block'?>">
  <form action="tickets.php" method="get">
  <input type="hidden" name="a" value="search">
   <table>
     <tr>
-        <td>Query: </td><td><input type="text" id="query" name="query" value="<?=Format::htmlchars($_REQUEST['query'])?>"></td>
+        <td>Query: </td><td><input type="text" id="query" name="query" value="<?php echo Format::htmlchars($_REQUEST['query'])?>"></td>
         <td>Dept:</td>
         <td><select name="dept"><option value=0>All Departments</option>
-            <?
+            <?php 
                 //Showing only departments the user has access to...
                 $sql='SELECT dept_id,dept_name FROM '.DEPT_TABLE;
                 if(!$thisuser->isadmin())
@@ -288,8 +287,8 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
                 $depts= db_query($sql);
                 while (list($deptId,$deptName) = db_fetch_row($depts)){
                 $selected = ($_GET['dept']==$deptId)?'selected':''; ?>
-                <option value="<?=$deptId?>"<?=$selected?>><?=$deptName?></option>
-            <?
+                <option value="<?php echo $deptId?>"<?php echo $selected?>><?php echo $deptName?></option>
+            <?php 
             }?>
             </select>
         </td>
@@ -297,20 +296,20 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
     
         <select name="status">
             <option value='any' selected >Any status</option>
-            <option value="open" <?=!strcasecmp($_REQUEST['status'],'Open')?'selected':''?>>Open</option>
-            <option value="overdue" <?=!strcasecmp($_REQUEST['status'],'overdue')?'selected':''?>>Overdue</option>
-            <option value="closed" <?=!strcasecmp($_REQUEST['status'],'Closed')?'selected':''?>>Closed</option>
+            <option value="open" <?php echo !strcasecmp($_REQUEST['status'],'Open')?'selected':''?>>Open</option>
+            <option value="overdue" <?php echo !strcasecmp($_REQUEST['status'],'overdue')?'selected':''?>>Overdue</option>
+            <option value="closed" <?php echo !strcasecmp($_REQUEST['status'],'Closed')?'selected':''?>>Closed</option>
         </select>
         </td>
      </tr>
     </table>
     <div>
         Date Span:
-        &nbsp;From&nbsp;<input id="sd" name="startDate" value="<?=Format::htmlchars($_REQUEST['startDate'])?>" 
+        &nbsp;From&nbsp;<input id="sd" name="startDate" value="<?php echo Format::htmlchars($_REQUEST['startDate'])?>" 
                 onclick="event.cancelBubble=true;calendar(this);" autocomplete=OFF>
             <a href="#" onclick="event.cancelBubble=true;calendar(getObj('sd')); return false;"><img src='images/cal.png'border=0 alt=""></a>
             &nbsp;&nbsp; to &nbsp;&nbsp;
-            <input id="ed" name="endDate" value="<?=Format::htmlchars($_REQUEST['endDate'])?>" 
+            <input id="ed" name="endDate" value="<?php echo Format::htmlchars($_REQUEST['endDate'])?>" 
                 onclick="event.cancelBubble=true;calendar(this);" autocomplete=OFF >
                 <a href="#" onclick="event.cancelBubble=true;calendar(getObj('ed')); return false;"><img src='images/cal.png'border=0 alt=""></a>
             &nbsp;&nbsp;
@@ -320,34 +319,34 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
        <td>Type:</td>
        <td>       
         <select name="stype">
-            <option value="LIKE" <?=(!$_REQUEST['stype'] || $_REQUEST['stype'] == 'LIKE') ?'selected':''?>>Scan (%)</option>
-            <option value="FT"<?= $_REQUEST['stype'] == 'FT'?'selected':''?>>Fulltext</option>
+            <option value="LIKE" <?php echo (!$_REQUEST['stype'] || $_REQUEST['stype'] == 'LIKE') ?'selected':''?>>Scan (%)</option>
+            <option value="FT"<?php echo  $_REQUEST['stype'] == 'FT'?'selected':''?>>Fulltext</option>
         </select>
  
 
        </td>
        <td>Sort by:</td><td>
-        <? 
+        <?php  
          $sort=$_GET['sort']?$_GET['sort']:'date';
         ?>
         <select name="sort">
-    	    <option value="ID" <?= $sort== 'ID' ?'selected':''?>>Ticket #</option>
-            <option value="pri" <?= $sort == 'pri' ?'selected':''?>>Priority</option>
-            <option value="date" <?= $sort == 'date' ?'selected':''?>>Date</option>
-            <option value="dept" <?= $sort == 'dept' ?'selected':''?>>Dept.</option>
+    	    <option value="ID" <?php echo  $sort== 'ID' ?'selected':''?>>Ticket #</option>
+            <option value="pri" <?php echo  $sort == 'pri' ?'selected':''?>>Priority</option>
+            <option value="date" <?php echo  $sort == 'date' ?'selected':''?>>Date</option>
+            <option value="dept" <?php echo  $sort == 'dept' ?'selected':''?>>Dept.</option>
         </select>
         <select name="order">
-            <option value="DESC"<?= $_REQUEST['order'] == 'DESC' ?'selected':''?>>Descending</option>
-            <option value="ASC"<?= $_REQUEST['order'] == 'ASC'?'selected':''?>>Ascending</option>
+            <option value="DESC"<?php echo  $_REQUEST['order'] == 'DESC' ?'selected':''?>>Descending</option>
+            <option value="ASC"<?php echo  $_REQUEST['order'] == 'ASC'?'selected':''?>>Ascending</option>
         </select>
        </td>
         <td>Results Per Page:</td><td>
         <select name="limit">
-        <?
+        <?php 
          $sel=$_REQUEST['limit']?$_REQUEST['limit']:15;
          for ($x = 5; $x <= 25; $x += 5) {?>
-            <option  value="<?=$x?>" <?=($sel==$x )?'selected':''?>><?=$x?></option>
-        <?}?>
+            <option  value="<?php echo $x?>" <?php echo ($sel==$x )?'selected':''?>><?php echo $x?></option>
+        <?php }?>
         </select>
      </td>
      <td>
@@ -373,7 +372,7 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
 <div style="margin-bottom:20px">
  <table width="100%" border="0" cellspacing=0 cellpadding=0 align="center">
     <tr>
-        <td width="80%" class="msg" >&nbsp;<b><?=$showing?>&nbsp;&nbsp;&nbsp;<?=$results_type?></b></td>
+        <td width="80%" class="msg" >&nbsp;<b><?php echo $showing?>&nbsp;&nbsp;&nbsp;<?php echo $results_type?></b></td>
         <td nowrap style="text-align:right;padding-right:20px;">
             <a href=""><img src="images/refresh.gif" alt="Refresh" border=0></a>
         </td>
@@ -382,25 +381,25 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
  <table width="100%" border="0" cellspacing=1 cellpadding=2>
     <form action="tickets.php" method="POST" name='tickets' onSubmit="return checkbox_checker(this,1,0);">
     <input type="hidden" name="a" value="mass_process" >
-    <input type="hidden" name="status" value="<?=$statusss?>" >
+    <input type="hidden" name="status" value="<?php echo $statusss?>" >
     <tr><td>
        <table width="100%" border="0" cellspacing=0 cellpadding=2 class="dtable" align="center">
         <tr>
-            <?if($canDelete || $canClose) {?>
+            <?php if($canDelete || $canClose) {?>
 	        <th width="8px">&nbsp;</th>
-            <?}?>
+            <?php }?>
 	        <th width="70" >
-                <a href="tickets.php?sort=ID&order=<?=$negorder?><?=$qstr?>" title="Sort By Ticket ID <?=$negorder?>">Ticket</a></th>
+                <a href="tickets.php?sort=ID&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Ticket ID <?php echo $negorder?>">Ticket</a></th>
 	        <th width="70">
-                <a href="tickets.php?sort=date&order=<?=$negorder?><?=$qstr?>" title="Sort By Date <?=$negorder?>">Date</a></th>
+                <a href="tickets.php?sort=date&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Date <?php echo $negorder?>">Date</a></th>
 	        <th width="280">Subject</th>
 	        <th width="120">
-                <a href="tickets.php?sort=dept&order=<?=$negorder?><?=$qstr?>" title="Sort By Category <?=$negorder?>">Department</a></th>
+                <a href="tickets.php?sort=dept&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Category <?php echo $negorder?>">Department</a></th>
 	        <th width="70">
-                <a href="tickets.php?sort=pri&order=<?=$negorder?><?=$qstr?>" title="Sort By Priority <?=$negorder?>">Priority</a></th>
+                <a href="tickets.php?sort=pri&order=<?php echo $negorder?><?php echo $qstr?>" title="Sort By Priority <?php echo $negorder?>">Priority</a></th>
             <th width="180" >From</th>
         </tr>
-        <?
+        <?php 
         $class = "row1";
         $total=0;
         if($tickets_res && ($num=db_num_rows($tickets_res))):
@@ -421,47 +420,47 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
                     //$subject=sprintf('<b>%s</b>',Format::truncate($row['subject'],40)); // Making the subject bold is too much for the eye
                 }
                 ?>
-            <tr class="<?=$class?> " id="<?=$row['ticket_id']?>">
-                <?if($canDelete || $canClose) {?>
+            <tr class="<?php echo $class?> " id="<?php echo $row['ticket_id']?>">
+                <?php if($canDelete || $canClose) {?>
                 <td align="center" class="nohover">
-                    <input type="checkbox" name="tids[]" value="<?=$row['ticket_id']?>" onClick="highLight(this.value,this.checked);">
+                    <input type="checkbox" name="tids[]" value="<?php echo $row['ticket_id']?>" onClick="highLight(this.value,this.checked);">
                 </td>
-                <?}?>
-                <td align="center" title="<?=$row['email']?>" nowrap>
-                  <a class="Icon <?=strtolower($row['source'])?>Ticket" title="<?=$row['source']?> Ticket: <?=$row['email']?>" 
-                    href="tickets.php?id=<?=$row['ticket_id']?>"><?=$tid?></a></td>
-                <td align="center" nowrap><?=Format::db_date($row['created'])?></td>
-                <td><a <?if($flag) { ?> class="Icon <?=$flag?>Ticket" title="<?=ucfirst($flag)?> Ticket" <?}?> 
-                    href="tickets.php?id=<?=$row['ticket_id']?>"><?=$subject?></a>
-                    &nbsp;<?=$row['attachments']?"<span class='Icon file'>&nbsp;</span>":''?></td>
-                <td nowrap><?=Format::truncate($row['dept_name'],30)?></td>
-                <td class="nohover" align="center" style="background-color:<?=$row['priority_color']?>;"><?=$row['priority_desc']?></td>
-                <td nowrap><?=Format::truncate($row['name'],22,strpos($row['name'],'@'))?>&nbsp;</td>
+                <?php }?>
+                <td align="center" title="<?php echo $row['email']?>" nowrap>
+                  <a class="Icon <?php echo strtolower($row['source'])?>Ticket" title="<?php echo $row['source']?> Ticket: <?php echo $row['email']?>" 
+                    href="tickets.php?id=<?php echo $row['ticket_id']?>"><?php echo $tid?></a></td>
+                <td align="center" nowrap><?php echo Format::db_date($row['created'])?></td>
+                <td><a <?php if($flag) { ?> class="Icon <?php echo $flag?>Ticket" title="<?php echo ucfirst($flag)?> Ticket" <?php }?> 
+                    href="tickets.php?id=<?php echo $row['ticket_id']?>"><?php echo $subject?></a>
+                    &nbsp;<?php echo $row['attachments']?"<span class='Icon file'>&nbsp;</span>":''?></td>
+                <td nowrap><?php echo Format::truncate($row['dept_name'],30)?></td>
+                <td class="nohover" align="center" style="background-color:<?php echo $row['priority_color']?>;"><?php echo $row['priority_desc']?></td>
+                <td nowrap><?php echo Format::truncate($row['name'],22,strpos($row['name'],'@'))?>&nbsp;</td>
             </tr>
-            <?
+            <?php 
             $class = ($class =='row2') ?'row1':'row2';
             } //end of while.
         else: //not tickets found!! ?> 
-            <tr class="<?=$class?>"><td colspan=8><b>Query returned 0 results.</b></td></tr>
-        <?
+            <tr class="<?php echo $class?>"><td colspan=8><b>Query returned 0 results.</b></td></tr>
+        <?php 
         endif; ?>
        </table>
     </td></tr>
-    <?
+    <?php 
     if($num>0){ //if we actually had any tickets returned.
     ?>
         <tr><td style="padding-left:20px">
-            <?if($canDelete || $canClose) { ?>
+            <?php if($canDelete || $canClose) { ?>
             Select:
                 <a href="#" onclick="return select_all(document.forms['tickets'],true)">All</a>&nbsp;
                 <a href="#" onclick="return reset_all(document.forms['tickets'])">None</a>&nbsp;
                 <a href="#" onclick="return toogle_all(document.forms['tickets'],true)">Toggle</a>&nbsp;
-            <?}?>
-            page:<?=$pageNav->getPageLinks()?>
+            <?php }?>
+            page:<?php echo $pageNav->getPageLinks()?>
         </td></tr>
-        <? if($canClose or $canDelete) { ?>
+        <?php  if($canClose or $canDelete) { ?>
         <tr><td align="center"> <br>
-            <?
+            <?php 
             $status=$_REQUEST['status']?$_REQUEST['status']:$status;
 
             //If the user can close the ticket...mass reopen is allowed.
@@ -470,7 +469,7 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
                 case 'closed': ?>
                     <input class="button" type="submit" name="reopen" value="Reopen"
                         onClick=' return confirm("Are you sure you want to reopen selected tickets?");'>
-                    <?
+                    <?php 
                     break;
                 case 'open':
                 case 'answered':
@@ -480,7 +479,7 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
                         onClick=' return confirm("Are you sure you want to mark selected tickets overdue/stale?");'>
                     <input class="button" type="submit" name="close" value="Close"
                         onClick=' return confirm("Are you sure you want to close selected tickets?");'>
-                    <?
+                    <?php 
                     break;
                 default: //search??
                     ?>
@@ -488,17 +487,17 @@ $basic_display=!isset($_REQUEST['advance_search'])?true:false;
                         onClick=' return confirm("Are you sure you want to close selected tickets?");'>
                     <input class="button" type="submit" name="reopen" value="Reopen"
                         onClick=' return confirm("Are you sure you want to reopen selected tickets?");'>
-            <?
+            <?php 
             }
             if($canDelete) {?>
                 <input class="button" type="submit" name="delete" value="Delete" 
                     onClick=' return confirm("Are you sure you want to DELETE selected tickets?");'>
-            <?}?>
+            <?php }?>
         </td></tr>
-        <? }
+        <?php  }
     } ?>
     </form>
  </table>
 </div>
 
-<?
+<?php 

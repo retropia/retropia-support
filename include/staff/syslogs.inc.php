@@ -1,5 +1,4 @@
-<?php
-if(!defined('OSTSCPINC') || !@$thisuser->isStaff()) die('Access Denied');
+<?php if(!defined('OSTSCPINC') || !@$thisuser->isStaff()) die('Access Denied');
 
 $qstr='&t=syslog'; //Query string collector
 if($_REQUEST['type']) { 
@@ -83,20 +82,20 @@ $showing=db_num_rows($resp)?$pageNav->showing():"";
     <input type="hidden" name="t" value="syslog" />
     <div style="padding-left:15px;">
         Date Span:
-        &nbsp;From&nbsp;<input id="sd" size=15 name="startDate" value="<?=Format::htmlchars($_REQUEST['startDate'])?>" 
+        &nbsp;From&nbsp;<input id="sd" size=15 name="startDate" value="<?php echo Format::htmlchars($_REQUEST['startDate'])?>" 
                 onclick="event.cancelBubble=true;calendar(this);" autocomplete=OFF>
             <a href="#" onclick="event.cancelBubble=true;calendar(getObj('sd')); return false;"><img src='images/cal.png'border=0 alt=""></a>
             &nbsp;&nbsp; to &nbsp;&nbsp;
-            <input id="ed" size=15 name="endDate" value="<?=Format::htmlchars($_REQUEST['endDate'])?>" 
+            <input id="ed" size=15 name="endDate" value="<?php echo Format::htmlchars($_REQUEST['endDate'])?>" 
                 onclick="event.cancelBubble=true;calendar(this);" autocomplete=OFF >
                 <a href="#" onclick="event.cancelBubble=true;calendar(getObj('ed')); return false;"><img src='images/cal.png'border=0 alt=""></a>
             &nbsp;&nbsp;
             &nbsp;Type:
             <select name='type'>
                 <option value="" selected>All</option>
-                <option value="Error" <?=($type=='Error')?'selected="selected"':''?>>Errors</option>
-                <option value="Warning" <?=($type=='Warning')?'selected="selected"':''?>>Warnings</option>
-                <option value="Debug" <?=($type=='Debug')?'selected="selected"':''?>>Debug</option>
+                <option value="Error" <?php echo ($type=='Error')?'selected="selected"':''?>>Errors</option>
+                <option value="Warning" <?php echo ($type=='Warning')?'selected="selected"':''?>>Warnings</option>
+                <option value="Debug" <?php echo ($type=='Debug')?'selected="selected"':''?>>Debug</option>
             </select>
             &nbsp;&nbsp;
             <input type="submit" Value="Go!" />
@@ -107,11 +106,11 @@ $showing=db_num_rows($resp)?$pageNav->showing():"";
  <table width="100%" border="0" cellspacing=1 cellpadding=2>
     <form action="tickets.php" method="POST" name='tickets' onSubmit="return checkbox_checker(this,1,0);">
     <input type="hidden" name="a" value="mass_process" >
-    <input type="hidden" name="status" value="<?=$statusss?>" >
+    <input type="hidden" name="status" value="<?php echo $statusss?>" >
     <tr><td>
        <table width="100%" border="0" cellspacing=0 cellpadding=2 class="logs" align="center">
-        <tr><th><?=$title?></th></tr>
-        <?
+        <tr><th><?php echo $title?></th></tr>
+        <?php 
         $class = "row1";
         $total=0;
         if($result && ($num=db_num_rows($result))):
@@ -119,36 +118,36 @@ $showing=db_num_rows($resp)?$pageNav->showing():"";
             while ($row = db_fetch_array($result)) {
                 $icon=isset($icons[$row['log_type']])?$icons[$row['log_type']]:'debugLog';
                 ?>
-            <tr class="<?=$class?> " id="<?=$row['log_id']?>">
+            <tr class="<?php echo $class?> " id="<?php echo $row['log_id']?>">
                 <td>
-                  <a href="javascript:toggleMessage('<?=$row['log_id']?>');">
-                  <img border="0" align="left" id="img_<?=$row['log_id']?>" src="images/plus.gif">
-                  <span style="color:000; float: left; width:190px;"><?=Format::db_daydatetime($row['created'])?></span>
+                  <a href="javascript:toggleMessage('<?php echo $row['log_id']?>');">
+                  <img border="0" align="left" id="img_<?php echo $row['log_id']?>" src="images/plus.gif">
+                  <span style="color:000; float: left; width:190px;"><?php echo Format::db_daydatetime($row['created'])?></span>
                   &nbsp;&nbsp;
-                  <span class="Icon <?=$icon?>"><?=Format::htmlchars($row['title'])?></span></a>
-                    <div id="msg_<?=$row['log_id']?>" class="hide">
+                  <span class="Icon <?php echo $icon?>"><?php echo Format::htmlchars($row['title'])?></span></a>
+                    <div id="msg_<?php echo $row['log_id']?>" class="hide">
                         <hr>
-                        <?=Format::display($row['log'])?>
-                        <span style="text-align:right;float:right;"><i><?=Format::htmlchars($row['ip_address'])?>&nbsp;&nbsp;</i></span>
+                        <?php echo Format::display($row['log'])?>
+                        <span style="text-align:right;float:right;"><i><?php echo Format::htmlchars($row['ip_address'])?>&nbsp;&nbsp;</i></span>
                     </div>
 
                 </td>
             </tr>
-            <?
+            <?php 
             $class = ($class =='row2') ?'row1':'row2';
             } //end of while.
         else: //not tickets found!! ?> 
-            <tr class="<?=$class?>"><td><b>Query returned 0 results.</b></td></tr>
-        <?
+            <tr class="<?php echo $class?>"><td><b>Query returned 0 results.</b></td></tr>
+        <?php 
         endif; ?>
        </table>
     </td></tr>
-    <?
+    <?php 
     if($num>0){ 
     ?>
-        <tr><td style="padding-left:20px">page:<?=$pageNav->getPageLinks()?></td></tr>
-    <?} ?>
+        <tr><td style="padding-left:20px">page:<?php echo $pageNav->getPageLinks()?></td></tr>
+    <?php } ?>
     </form>
  </table>
 </div>
-<?
+<?php 

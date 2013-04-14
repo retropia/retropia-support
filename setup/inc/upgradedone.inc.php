@@ -5,18 +5,16 @@ Please take a minute to cleanup!
 <ul>
     <li><strong>Delete setup directory</strong><br>
      After verifying that the upgrade completed correctly please delete setup folder.</li>
-    <?if(ini_get('register_globals')) { ?>
+    <?php if(ini_get('register_globals')) { ?>
      <li><strong>Disable register globals (optional)</strong><br>
      If you don't have a good reason why register globals is enabled then please disable it.
      </li>
-    <?php
-     }
+    <?php      }
      if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_decrypt')) {?>
      <li><strong>Install/Enable cryptography extension mcrypt (optional)</strong><br>
        Cryptography extension mcrypt is not enabled or installed. IMAP/POP passwords will be stored as plain text in database.
      </li>
-     <?php
-     }?>
+     <?php      }?>
     <li><strong>Enable the helpdesk</strong><br>
      As admin you can enable it in <a href="../scp/admin.php" target="_blank">Admin Panel</a> - preference section.
 </ul>

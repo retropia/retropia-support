@@ -5,20 +5,17 @@
         chmod 644 include/ost-config.php</li>
     <li><strong>Delete setup directory</strong><br>
      After verifying that your installation completed correctly please delete setup folder.</li>
-    <?php
-     if(ini_get('register_globals')) { ?>
+    <?php      if(ini_get('register_globals')) { ?>
      <li><strong>Disable register globals (optional)</strong><br>
      If you don't have a good reason why register globals is enabled then please disable it.
      </li> 
-    <?php
-     }
+    <?php      }
 
      if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_decrypt')) {?>
      <li><strong>Install/Enable cryptography extension mcrypt (optional)</strong><br>
        Cryptography extension mcrypt is not enabled or installed. IMAP/POP passwords will be stored as plain text in database.
      </li>
-     <?php
-     }?>
+     <?php      }?>
 </ul>
 </p>
 <h3>Post-Install Setup</h3>

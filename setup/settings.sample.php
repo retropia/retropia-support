@@ -1,5 +1,4 @@
-<?php
-/*********************************************************************
+<?php /*********************************************************************
     setttings.php
 
     Static osTicket configuration file. Mainly useful for mysql login info.

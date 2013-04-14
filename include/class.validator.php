@@ -1,5 +1,4 @@
-<?php
-/*********************************************************************
+<?php /*********************************************************************
     class.validator.php
 
     Input validation helper. This class contains collection of functions used for data validation.

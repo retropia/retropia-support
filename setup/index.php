@@ -1,3 +1,2 @@
-<?php
-require('install.php');
+<?php require('install.php');
 ?>

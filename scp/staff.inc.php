@@ -1,5 +1,4 @@
-<?php
-/*************************************************************************
+<?php /*************************************************************************
     staff.inc.php
     
     File included on every staff page...handles logins (security) and file path issues.
