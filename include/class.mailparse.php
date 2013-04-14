@@ -72,16 +72,16 @@ class Mail_Parse {
    
     
     function getFromAddressList(){
-        return Mail_Parse::parseAddressList($this->struct->headers['from']);
+        return self::parseAddressList($this->struct->headers['from']);
     }
 
     function getToAddressList(){
         //Delivered-to incase it was a BBC mail.
-       return Mail_Parse::parseAddressList($this->struct->headers['to']?$this->struct->headers['to']:$this->struct->headers['delivered-to']);
+       return self::parseAddressList($this->struct->headers['to']?$this->struct->headers['to']:$this->struct->headers['delivered-to']);
     }
         
     function getCcAddressList(){
-        return $this->struct->headers['cc']?Mail_Parse::parseAddressList($this->struct->headers['cc']):null;
+        return $this->struct->headers['cc']?self::parseAddressList($this->struct->headers['cc']):null;
     }
 
     function getMessageId(){
@@ -152,10 +152,10 @@ class Mail_Parse {
     }
 
     function getPriority(){
-        return Mail_Parse::parsePriority($this->getHeader());
+        return self::parsePriority($this->getHeader());
     }
 
-    function parsePriority($header=null){
+    static function parsePriority($header=null){
 
         $priority=0;
         if($header && ($begin=strpos($header,'X-Priority:'))!==false){
@@ -173,7 +173,7 @@ class Mail_Parse {
         return $priority;
     }
 
-    function parseAddressList($address){
+    static function parseAddressList($address){
         return Mail_RFC822::parseAddressList($address, null, null,false);
     }
 }
