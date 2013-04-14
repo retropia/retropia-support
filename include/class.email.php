@@ -121,7 +121,7 @@ class Email {
     }
 
     function update($vars,&$errors) {
-        if($this->save($this->getId(),$vars,$errors)){
+        if(self::save($this->getId(),$vars,$errors)){
             $this->reload();
             return true;
         }
@@ -207,7 +207,7 @@ class Email {
 
     //sends emails using native php mail function Email::sendmail( ......);
     //Don't use this function if you can help it.
-    function sendmail($to,$subject,$message,$from) {
+    static function sendmail($to,$subject,$message,$from) {
         
         require_once ('Mail.php'); // PEAR Mail package
         require_once ('Mail/mime.php'); // PEAR Mail_Mime packge
@@ -239,7 +239,7 @@ class Email {
     }
 
 
-    function getIdByEmail($email) {
+    static function getIdByEmail($email) {
         
         $resp=db_query('SELECT email_id FROM '.EMAIL_TABLE.' WHERE email='.db_input($email));
         if($resp && db_num_rows($resp))   
@@ -248,12 +248,12 @@ class Email {
         return $id;
     }
 
-    function create($vars,&$errors) {
-        return Email::save(0,$vars,$errors);
+    static function create($vars,&$errors) {
+        return self::save(0,$vars,$errors);
     }
 
 
-    function save($id,$vars,&$errors) {
+    static function save($id,$vars,&$errors) {
         global $cfg;
         //very basic checks
 
@@ -262,7 +262,7 @@ class Email {
 
         if(!$vars['email'] || !Validator::is_email($vars['email'])){
             $errors['email']='Valid email required';
-        }elseif(($eid=Email::getIdByEmail($vars['email'])) && $eid!=$id){
+        }elseif(($eid=self::getIdByEmail($vars['email'])) && $eid!=$id){
             $errors['email']='Email already exits';
         }elseif(!strcasecmp($cfg->getAdminEmail(),$vars['email'])){
             $errors['email']='Email already used as admin email!';
@@ -392,7 +392,7 @@ class Email {
         return $errors?FALSE:TRUE;
     }
 
-    function deleteEmail($id) {
+    static function deleteEmail($id) {
         global $cfg;
         //Make sure we are not trying to delete default emails.
         if($id==$cfg->getDefaultEmailId() || $id==$cfg->getAlertEmailId()) //double...double check.
