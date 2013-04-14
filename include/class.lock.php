@@ -54,7 +54,7 @@ class TicketLock {
     }
 
     //Create a ticket lock...this function assumes the caller check for access & validity of ticket & staff x-ship.    
-    function acquire($ticketId,$staffId) {
+    static function acquire($ticketId,$staffId) {
         global $cfg;
 
         if(!$ticketId or !$staffId or !$cfg->getLockTime())
@@ -118,7 +118,7 @@ class TicketLock {
     }
 
     //Simply remove ALL locks a user (staff) holds on a ticket(s).
-    function removeStaffLocks($staffId,$ticketId=0) {
+    static function removeStaffLocks($staffId,$ticketId=0) {
         $sql='DELETE FROM '.TICKET_LOCK_TABLE.' WHERE staff_id='.db_input($staffId);
         if($ticketId)
             $sql.=' AND ticket_id='.db_input($ticketId);
@@ -127,7 +127,7 @@ class TicketLock {
     }
 
     //Called  via cron 
-    function cleanup() {
+    static function cleanup() {
         //Cleanup any expired locks.
         db_query('DELETE FROM '.TICKET_LOCK_TABLE.' WHERE expire<NOW()');
         @db_query('OPTIMIZE TABLE '.TICKET_LOCK_TABLE);
