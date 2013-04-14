@@ -162,7 +162,7 @@ class Template {
     }
 
 
-    function create($var,&$errors){
+    static function create($var,&$errors){
         global $cfg;
 
         if(!$var['name'])
