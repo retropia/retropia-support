@@ -18,23 +18,23 @@
 //TODO: Make it DB based!
 class Cron {
 
-    function MailFetcher() {
+    static function MailFetcher() {
         require_once(INCLUDE_DIR.'class.mailfetch.php');
         MailFetcher::fetchMail(); //Fetch mail..frequency is limited by email account setting.
     }
 
-    function TicketMonitor() {
+    static function TicketMonitor() {
         require_once(INCLUDE_DIR.'class.ticket.php');
         require_once(INCLUDE_DIR.'class.lock.php');
         Ticket::checkOverdue(); //Make stale tickets overdue
         TicketLock::cleanup(); //Remove expired locks 
     }
 
-    function PurgeLogs() {
+    static function PurgeLogs() {
         Sys::purgeLogs();
     }
 
-    function run(){ //called by outside cron NOT autocron
+    static function run(){ //called by outside cron NOT autocron
         Cron::MailFetcher();
         Cron::TicketMonitor();
         cron::PurgeLogs();
