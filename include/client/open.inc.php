@@ -48,12 +48,6 @@ $info=($_POST && $errors)?Format::input($_POST):array(); //on error...use the po
 				    </div>
 				    
 				    <div>
-				        <label>Telephone:</label>
-				        <input type="text" name="phone" size="25" value="<?php echo $info['phone']?>">
-				            
-				    </div>
-				    
-				    <div>
 				        <label>Help Topic: <span class="required">(required)</span>&nbsp;<font class="error">&nbsp;<?php echo $errors['topicId']?></font></label>
 				            <select name="topicId">
 				                <?php 

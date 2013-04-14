@@ -52,10 +52,6 @@ $dept=($dept && $dept->isPublic())?$dept:$cfg->getDefaultDept();
 	                <span class="heading">Email:</span>
 	                <p><?php echo $ticket->getEmail()?></p>
 	            </div>
-	            <div>
-	                <span class="heading">Phone:</span>
-	                <p><?php echo Format::phone($ticket->getPhoneNumber())?></p>
-	            </div>
 			</div>
 		</div>
 	</div>
