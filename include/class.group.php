@@ -16,18 +16,18 @@
 
 class Group {
 
-    function update($id,$vars,&$errors) {
-        if($id && Group::save($id,$vars,$errors)){
+    static function update($id,$vars,&$errors) {
+        if($id && self::save($id,$vars,$errors)){
             return true;
         }
         return false;
     }
 
-    function create($vars,&$errors) { 
-        return Group::save(0,$vars,$errors);
+    static function create($vars,&$errors) { 
+        return self::save(0,$vars,$errors);
     }
 
-    function save($id,$vars,&$errors) {
+    static function save($id,$vars,&$errors) {
 
         if($id && !$vars['group_id'])
             $errors['err']='Missing or invalid group ID';
