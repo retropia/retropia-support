@@ -111,7 +111,7 @@ class Template {
         if(!$errors && $var['id'] && $var['id']!=$this->getId())
             $errors['err']='Internal error. Try again';
 
-        if(!$errors['name'] && ($tid=Template::getIdByName($var['name'])) && $tid!=$this->getId())
+        if(!$errors['name'] && ($tid=self::getIdByName($var['name'])) && $tid!=$this->getId())
              $errors['name']='Name already in use';
                         
         if(!$errors) {
@@ -151,7 +151,7 @@ class Template {
     }
 
 
-    function getIdByName($name) {
+    static function getIdByName($name) {
 
         $id=0;
         $sql='SELECT tpl_id FROM '.EMAIL_TEMPLATE_TABLE.' WHERE name='.db_input($name);
@@ -167,7 +167,7 @@ class Template {
 
         if(!$var['name'])
             $errors['name']='required';
-        elseif(!$errors && Template::getIdByName($var['name'])) 
+        elseif(!$errors && self::getIdByName($var['name'])) 
              $errors['name']='Name already in use';
               
         if(!$var['copy_template'])
