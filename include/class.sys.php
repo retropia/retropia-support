@@ -24,13 +24,13 @@ class Sys {
 
 
     //Load configuration info.
-    function getConfig() {
+    static function getConfig() {
         $cfg= new Config(1);
         return ($cfg && $cfg->getId())?$cfg:null;
     }
 
 
-    function alertAdmin($subject,$message,$log=false) {
+    static function alertAdmin($subject,$message,$log=false) {
         global $cfg;
                 
         //Set admin's email address
@@ -55,7 +55,7 @@ class Sys {
 
     }
 
-    function log($priority,$title,$message,$alert=true) {
+    static function log($priority,$title,$message,$alert=true) {
         global $cfg;
 
         switch($priority){ //We are providing only 3 levels of logs. Windows style.
@@ -93,7 +93,7 @@ class Sys {
         }
     }
 
-    function purgeLogs(){
+    static function purgeLogs(){
         global $cfg;
 
         if($cfg && ($gp=$cfg->getLogGraceperiod()) && is_numeric($gp)) {
