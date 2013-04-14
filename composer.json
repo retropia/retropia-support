@@ -1,0 +1,13 @@
+{
+    "name": "retropia/retropia-support",
+    "description": "retropia.org support site",
+    "authors": [
+        {
+            "name": "protomouse",
+            "email": "root@protomou.se"
+        }
+    ],
+    "require": {
+
+    }
+}
