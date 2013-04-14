@@ -18,7 +18,7 @@
 class Format {
 
 
-    function file_size($bytes) {
+    static function file_size($bytes) {
 
         if($bytes<1024)
             return $bytes.' bytes';        
@@ -28,14 +28,14 @@ class Format {
         return round(($bytes/1024000),1).' mb';
     }
 
-    function file_name($filename) {
+    static function file_name($filename) {
 
         $search = array('/ß/','/ä/','/Ä/','/ö/','/Ö/','/ü/','/Ü/','([^[:alnum:]._])');
         $replace = array('ss','ae','Ae','oe','Oe','ue','Ue','_');
         return preg_replace($search,$replace,$filename);
     }
 
-	function phone($phone) {
+	static function phone($phone) {
 
 		$stripped= preg_replace("/[^0-9]/", "", $phone);
 		if(strlen($stripped) == 7)
@@ -46,7 +46,7 @@ class Format {
 			return $phone;
 	}
 
-    function truncate($string,$len,$hard=false) {
+    static function truncate($string,$len,$hard=false) {
         
         if(!$len || $len>strlen($string))
             return $string;
@@ -56,32 +56,32 @@ class Format {
         return $hard?$string:(substr($string,0,strrpos($string,' ')).' ...');
     }
 
-    function strip_slashes($var){
+    static function strip_slashes($var){
         return is_array($var)?array_map(array('Format','strip_slashes'),$var):stripslashes($var);
     }
 
-    function htmlchars($var) {
+    static function htmlchars($var) {
         return is_array($var)?array_map(array('Format','htmlchars'),$var):htmlspecialchars($var,ENT_QUOTES);
     }
 
 
     //Same as htmlchars above but with ability to add extra checks...etc.
-    function input($var) {
+    static function input($var) {
 
         /*: Moved to main.inc.php
         if(function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc())
-            $var=Format::strip_slashes($var);
+            $var=self::strip_slashes($var);
         */
-        return Format::htmlchars($var);
+        return self::htmlchars($var);
     }
 
     //Format text for display..
-    function display($text) {
+    static function display($text) {
         global $cfg;
 
-        $text=Format::htmlchars($text); //take care of html special chars
+        $text=self::htmlchars($text); //take care of html special chars
         if($cfg && $cfg->clickableURLS() && $text)
-            $text=Format::clickableurls($text);
+            $text=self::clickableurls($text);
 
         //Wrap long words...
         $text =preg_replace_callback('/\w{75,}/',create_function('$matches','return wordwrap($matches[0],70,"\n",true);'),$text);
@@ -89,12 +89,12 @@ class Format {
         return nl2br($text);
     }
 
-    function striptags($string) {
+    static function striptags($string) {
         return strip_tags(html_entity_decode($string)); //strip all tags ...no mercy!
     }
 
     //make urls clickable. Mainly for display 
-    function clickableurls($text) {
+    static function clickableurls($text) {
 
         //Not perfect but it works - please help improve it. 
         $text=preg_replace('/(((f|ht){1}tp(s?):\/\/)[-a-zA-Z0-9@:%_\+.~#?&;\/\/=]+)/','<a href="\\1" target="_blank">\\1</a>', $text);
@@ -105,19 +105,19 @@ class Format {
         return $text;
     }
 
-    function stripEmptyLines ($string) {
+    static function stripEmptyLines ($string) {
         //return preg_replace("/(^[\r\n]*|[\r\n]+)[\s\t]*[\r\n]+/", "\n", $string);
         //return preg_replace('/\s\s+/',"\n",$string); //Too strict??
         return preg_replace("/\n{3,}/", "\n\n", $string);
     }
 
     
-    function linebreaks($string) {
+    static function linebreaks($string) {
         return urldecode(ereg_replace("%0D", " ", urlencode($string)));
     }
     
     /* elapsed time */
-    function elapsedTime($sec){
+    static function elapsedTime($sec){
 
         if(!$sec || !is_numeric($sec)) return "";
 
@@ -132,26 +132,26 @@ class Format {
     }
     
     /* Dates helpers...most of this crap will change once we move to PHP 5*/
-    function db_date($time) {
+    static function db_date($time) {
         global $cfg;
-        return Format::userdate($cfg->getDateFormat(),Misc::db2gmtime($time));
+        return self::userdate($cfg->getDateFormat(),Misc::db2gmtime($time));
     }
 
-    function db_datetime($time) {
+    static function db_datetime($time) {
         global $cfg;
-        return Format::userdate($cfg->getDateTimeFormat(),Misc::db2gmtime($time));
+        return self::userdate($cfg->getDateTimeFormat(),Misc::db2gmtime($time));
     }
     
-    function db_daydatetime($time) {
+    static function db_daydatetime($time) {
         global $cfg;
-        return Format::userdate($cfg->getDayDateTimeFormat(),Misc::db2gmtime($time));
+        return self::userdate($cfg->getDayDateTimeFormat(),Misc::db2gmtime($time));
     }
 
-    function userdate($format,$gmtime) {
-        return Format::date($format,$gmtime,$_SESSION['TZ_OFFSET'],$_SESSION['daylight']);
+    static function userdate($format,$gmtime) {
+        return self::date($format,$gmtime,$_SESSION['TZ_OFFSET'],$_SESSION['daylight']);
     }
     
-    function date($format,$gmtimestamp,$offset=0,$daylight=false){
+    static function date($format,$gmtimestamp,$offset=0,$daylight=false){
         if(!$gmtimestamp || !is_numeric($gmtimestamp)) return ""; 
        
         $offset+=$daylight?date('I',$gmtimestamp):0; //Daylight savings crap.
