@@ -43,7 +43,7 @@ if($_POST && $errors){
         </td>
     </tr>
     <tr>
-        <td align="left" ><b>Full Name:</b></td>
+        <td align="left" ><b>Name:</b></td>
         <td>
             <input type="text" id="name" name="name" size="25" value="<?php echo $info['name']?>">
             &nbsp;<font class="error"><b>*</b>&nbsp;<?php echo $errors['name']?></font>

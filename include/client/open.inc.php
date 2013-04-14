@@ -26,7 +26,7 @@ $info=($_POST && $errors)?Format::input($_POST):array(); //on error...use the po
 				<form action="open.php" method="POST" enctype="multipart/form-data" id="newTicket">
 				
 				    <div>
-				        <label>Full Name: <span class="required">(required)</span>&nbsp;<font class="error">&nbsp;<?php echo $errors['name']?></font></label>
+				        <label>Name: <span class="required">(required)</span>&nbsp;<font class="error">&nbsp;<?php echo $errors['name']?></font></label>
 				            <?php if ($thisclient && ($name=$thisclient->getName())) {
 				                ?>
 				                <input type="hidden" name="name" value="<?php echo $name?>"><?php echo $name?>

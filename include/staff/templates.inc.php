@@ -136,7 +136,7 @@ $deletable=0;
                 <tr><td width="100">%id</td><td>Ticket ID (internal ID)</td></tr>
                 <tr><td>%ticket</td><td>Ticket number (external ID)</td></tr>
                 <tr><td>%email</td><td>Email address</td></tr>
-                <tr><td>%name</td><td>Full name</td></tr>
+                <tr><td>%name</td><td>Name</td></tr>
                 <tr><td>%subject</td><td>Subject</td></tr>
                 <tr><td>%topic</td><td>Help topic (web only)</td></tr>
                 <tr><td>%phone</td><td>Phone number | ext</td></tr>
