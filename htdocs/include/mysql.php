@@ -28,7 +28,7 @@
         //set desired encoding just in case mysql charset is not UTF-8 - Thanks to FreshMedia
         if($$dblink) {
             @mysql_query('SET NAMES "UTF8"');
-            @mysql_query('SET COLLATION_CONNECTION=utf8_general_ci');
+            @mysql_query('SET COLLATION_CONNECTION=utf8_unicode_ci');
         }
         return $$dblink;	
     }
