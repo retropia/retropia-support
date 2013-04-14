@@ -24,7 +24,7 @@ header("Content-Type: text/html; charset=UTF-8\r\n");
     <header class="container">
 		<div class="row">
 			<div class="twelvecol last">
-				<h1><a href="index.php" title="Support Ticket Center" class="title">Support Ticket Center</a></h1>
+				<h1><a href="index.php" title="Support Ticket Center" class="title"><?php echo Format::htmlchars($title)?></a></h1>
 				<nav id="mainNav">
 					<ul id="topNav">
 					 <li><a class="home" href="index.php">Home</a></li>
