@@ -317,7 +317,7 @@ class MailFetcher {
         return $msgs;
     }
 
-    function fetchMail(){
+    static function fetchMail(){
         global $cfg;
       
         if(!$cfg->canFetchMail())
