@@ -16,7 +16,7 @@
 class Api {
   
 
-    function add($ip,&$errors) {
+    static function add($ip,&$errors) {
         global $cfg;
 
         $passphrase=$cfg->getAPIPassphrase();
@@ -43,7 +43,7 @@ class Api {
         return $id;
     }
 
-    function setPassphrase($phrase,&$errors) {
+    static function setPassphrase($phrase,&$errors) {
         global $cfg;
 
         if(!$phrase)
@@ -66,7 +66,7 @@ class Api {
     }
 
 
-    function getKey($ip) {
+    static function getKey($ip) {
 
         $key=null;
         $resp=db_query('SELECT apikey FROM '.API_KEY_TABLE.' WHERE ipaddr='.db_input($ip));
@@ -77,7 +77,7 @@ class Api {
     }
 
 
-    function validate($key,$ip) {
+    static function validate($key,$ip) {
 
         $resp=db_query('SELECT id FROM '.API_KEY_TABLE.' WHERE ipaddr='.db_input($ip).' AND apikey='.db_input($key));
         return ($resp && db_num_rows($resp))?true:false;
