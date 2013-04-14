@@ -92,15 +92,15 @@ class Validator {
                 break;
             case 'phone':
             case 'fax':
-                if(!$this->is_phone($this->input[$k]))
+                if(!self::is_phone($this->input[$k]))
                     $this->errors[$k]=$field['error'];
                 break;
             case 'email':
-                if(!$this->is_email($this->input[$k]))
+                if(!self::is_email($this->input[$k]))
                     $this->errors[$k]=$field['error'];
                 break;
             case 'url':
-                if(!$this->is_url($this->input[$k]))
+                if(!self::is_url($this->input[$k]))
                     $this->errors[$k]=$field['error'];
                 break;
             case 'password':
@@ -131,16 +131,16 @@ class Validator {
     }
    
     /* Functions below can be called directly without class instance. Validator::func(var..); */
-    function is_email($email) {
+    static function is_email($email) {
         return (preg_match('/^([*+!.&#$|\'\\%\/0-9a-z^_`{}=?~:-]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})$/i',trim(stripslashes($email))));
     }
-    function is_phone($phone) {
+    static function is_phone($phone) {
         /* We're not really validating the phone number but just making sure it doesn't contain illegal chars and of acceptable len */
         $stripped=preg_replace("(\(|\)|\-|\+|[  ]+)","",$phone);
         return (!is_numeric($stripped) || ((strlen($stripped)<7) || (strlen($stripped)>16)))?false:true;
     }
     
-    function is_url($url) { //Thanks to 4ice for the fix.
+    static function is_url($url) { //Thanks to 4ice for the fix.
         
         
 
@@ -165,7 +165,7 @@ class Validator {
     }
 
 
-    function is_ip($ip) {
+    static function is_ip($ip) {
       
         if(!$ip or empty($ip))
             return false;
