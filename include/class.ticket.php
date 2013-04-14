@@ -1024,7 +1024,7 @@ class Ticket{
     }
 
    /*============== Functions below do not require an instance of the class to be used. To call it use Ticket::function(params); ==================*/
-    function getIdByExtId($extid) {
+    static function getIdByExtId($extid) {
         $sql ='SELECT  ticket_id FROM '.TICKET_TABLE.' ticket WHERE ticketID='.db_input($extid);
         $res=db_query($sql);
         if($res && db_num_rows($res))
@@ -1033,19 +1033,19 @@ class Ticket{
         return $id;
     }
 
-    function genExtRandID() {
+    static function genExtRandID() {
         global $cfg;
 
         //We can allow collissions...extId and email must be unique ...so same id with diff emails is ok..
         // But for clarity...we are going to make sure it is unique.
         $id=Misc::randNumber(EXT_TICKET_ID_LEN);
         if(db_num_rows(db_query('SELECT ticket_id FROM '.TICKET_TABLE.' WHERE ticketID='.db_input($id))))
-            return Ticket::genExtRandID();
+            return self::genExtRandID();
 
         return $id;
     }
 
-    function getIdByMessageId($mid,$email) {
+    static function getIdByMessageId($mid,$email) {
 
         if(!$mid || !$email)
             return 0;
@@ -1061,7 +1061,7 @@ class Ticket{
     }
 
 
-    function getOpenTicketsByEmail($email){
+    static function getOpenTicketsByEmail($email){
 
         $sql='SELECT count(*) as open FROM '.TICKET_TABLE.' WHERE status='.db_input('open').' AND email='.db_input($email);
         if(($res=db_query($sql)) && db_num_rows($res))
@@ -1070,7 +1070,7 @@ class Ticket{
         return $num;
     }
 
-    function update($var,&$errors) {
+    static function update($var,&$errors) {
          global $cfg,$thisuser;
 
          $fields=array();
@@ -1154,7 +1154,7 @@ class Ticket{
      *
      *  $autorespond and $alertstaff overwrites config info...
      */      
-    function create($var,&$errors,$origin,$autorespond=true,$alertstaff=true) {
+    static function create($var,&$errors,$origin,$autorespond=true,$alertstaff=true) {
         global $cfg,$thisclient,$_FILES;
        
        /* Coders never code so fully and joyfully as when they do it for free  - Peter Rotich */
@@ -1220,7 +1220,7 @@ class Ticket{
         //check ticket limits..if limit set is >0 
         //TODO: Base ticket limits on SLA...
         if($var['email'] && !$errors && $cfg->getMaxOpenTickets()>0 && strcasecmp($origin,'staff')){
-            $openTickets=Ticket::getOpenTicketsByEmail($var['email']);
+            $openTickets=self::getOpenTicketsByEmail($var['email']);
             if($openTickets>=$cfg->getMaxOpenTickets()) {
                 $errors['err']="You've reached the maximum open tickets allowed.";
                 //Send the notice only once (when the limit is reached) incase of autoresponders at client end.
@@ -1301,7 +1301,7 @@ class Ticket{
         $ipaddress=$var['ip']?$var['ip']:$_SERVER['REMOTE_ADDR'];
         
         //We are ready son...hold on to the rails.
-        $extId=Ticket::genExtRandID();
+        $extId=self::genExtRandID();
         $sql=   'INSERT INTO '.TICKET_TABLE.' SET created=NOW() '.
                 ',ticketID='.db_input($extId).
                 ',dept_id='.db_input($deptId).
@@ -1433,7 +1433,7 @@ class Ticket{
         return $ticket;
     }
 
-    function create_by_staff($var,&$errors) {
+    static function create_by_staff($var,&$errors) {
         global $_FILES,$thisuser,$cfg;
 
         //check if the staff is allowed to create tickets.
@@ -1448,7 +1448,7 @@ class Ticket{
         $var['emailId']=0;//clean crap.
         $var['message']='Ticket created by staff';
 
-        if(($ticket=Ticket::create($var,$errors,'staff',false,(!$var['staffId'])))){  //Staff are alerted only IF the ticket is not being assigned.
+        if(($ticket=self::create($var,$errors,'staff',false,(!$var['staffId'])))){  //Staff are alerted only IF the ticket is not being assigned.
             //post issue as a response...
             $msgId=$ticket->getLastMsgId();
             $issue=$ticket->replaceTemplateVars($var['issue']);
@@ -1531,7 +1531,7 @@ class Ticket{
     
     }
    
-    function checkOverdue(){
+    static function checkOverdue(){
        
         global $cfg;
 
