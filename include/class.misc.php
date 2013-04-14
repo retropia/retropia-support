@@ -15,12 +15,12 @@
 **********************************************************************/
 class Misc {
     
-	function randCode($len=8) {
+	static function randCode($len=8) {
 		return substr(strtoupper(base_convert(microtime(),10,16)),0,$len);
 	}
     
     /* Helper used to generate ticket IDs */
-    function randNumber($len=6,$start=false,$end=false) {
+    static function randNumber($len=6,$start=false,$end=false) {
 
         mt_srand ((double) microtime() * 1000000);
         $start=(!$len && $start)?$start:str_pad(1,$len,"0",STR_PAD_RIGHT);
@@ -29,7 +29,7 @@ class Misc {
         return mt_rand($start,$end);
     }
 
-    function encrypt($text, $salt) {
+    static function encrypt($text, $salt) {
 
         //if mcrypt extension is not installed--simply return unencryted text and log a warning.
         if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_decrypt')) {
@@ -42,7 +42,7 @@ class Misc {
                          mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
     }
 
-    function decrypt($text, $salt) {
+    static function decrypt($text, $salt) {
         if(!function_exists('mcrypt_encrypt') || !function_exists('mcrypt_decrypt'))
             return $text;
 
@@ -51,7 +51,7 @@ class Misc {
     }
 
     /* misc date helpers...this will go away once we move to php 5 */ 
-    function db2gmtime($var){
+    static function db2gmtime($var){
         global $cfg;
         if(!$var) return;
         
@@ -60,11 +60,11 @@ class Misc {
     }
 
     //Take user time or gmtime and return db (mysql) time.
-    function dbtime($var=null){
+    static function dbtime($var=null){
          global $cfg;
              
         if(is_null($var) || !$var)
-            $time=Misc::gmtime(); //gm time.
+            $time=self::gmtime(); //gm time.
         else{ //user time to GM.
             $time=is_int($var)?$var:strtotime($var);
             $offset=$_SESSION['TZ_OFFSET']+($_SESSION['daylight']?date('I',$time):0);
@@ -75,12 +75,12 @@ class Misc {
     }
     
     /*Helper get GM time based on timezone offset*/
-    function gmtime() {
+    static function gmtime() {
         return time()-date('Z');
     }
 
     //Current page
-    function currentURL() {
+    static function currentURL() {
         
         $str = 'http';
         if ($_SERVER['HTTPS'] == 'on') {
@@ -102,7 +102,7 @@ class Misc {
         return $str;
     }
 
-    function timeDropdown($hr=null, $min =null,$name='time') {
+    static function timeDropdown($hr=null, $min =null,$name='time') {
         $hr =is_null($hr)?0:$hr;
         $min =is_null($min)?0:$min;
 
