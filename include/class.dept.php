@@ -125,7 +125,7 @@ class Dept {
     }
 
     function update($vars,&$errors) {
-        if($this->save($this->getId(),$vars,$errors)){
+        if(self::save($this->getId(),$vars,$errors)){
             return true;
         }
         return false;
@@ -167,18 +167,18 @@ class Dept {
         return $name;
     }
 
-    function getDefaultDeptName() {
+    static function getDefaultDeptName() {
         global $cfg;
-        return Dept::getNameById($cfg->getDefaultDeptId());
+        return self::getNameById($cfg->getDefaultDeptId());
     }
 
 
-    function create($vars,&$errors) {
-        return Dept::save(0,$vars,$errors);
+    static function create($vars,&$errors) {
+        return self::save(0,$vars,$errors);
     }
 
 
-    function delete($id) {
+    static function delete($id) {
         global $cfg; 
         if($id==$cfg->getDefaultDeptId())
             return 0;
@@ -200,7 +200,7 @@ class Dept {
         
     }
 
-    function save($id,$vars,&$errors) {
+    static function save($id,$vars,&$errors) {
         global $cfg;
                 
         if($id && $id!=$_POST['dept_id'])
