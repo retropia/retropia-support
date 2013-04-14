@@ -92,18 +92,18 @@ class Topic {
     }
 
     function update($vars,&$errors) {
-        if($this->save($this->getId(),$vars,$errors)){
+        if(self::save($this->getId(),$vars,$errors)){
             $this->reload();
             return true;
         }
         return false;
     }
 
-    function create($vars,&$errors) { 
-        return Topic::save(0,$vars,$errors);
+    static function create($vars,&$errors) { 
+        return self::save(0,$vars,$errors);
     }
 
-    function save($id,$vars,&$errors) {
+    static function save($id,$vars,&$errors) {
 
 
         if($id && $id!=$vars['topic_id'])
