@@ -150,15 +150,15 @@ img {
 			list-style: none;
 			line-height: 48px;
 			text-align: center;
-			border-bottom: 1px solid #e66565;
+			border-bottom: 1px solid #0e7eca;
 		}
 		
 			#mainNav li a, #mainNav li.active a, body.home #topNav li a.home, body.open #topNav li a.new_ticket, body.tickets #topNav li a.ticket_status, body.tickets #topNav li a.my_tickets {
 				border: 0;
 				display: block;
 				color: #fff;
-				background: #d85656;
-				text-shadow: 1px 1px rgb(202,71,71);
+				background: #006fbb;
+				text-shadow: 1px 1px rgb(0,81,157);
 			}
 	
 	#topNav {
@@ -168,9 +168,9 @@ img {
 		left: 0;
 		margin: 0;
 		right: 0;
-		background: #d85656;
+		background: #006fbb;
 		z-index: 2;
-		border-top: 1px solid #d35050;
+		border-top: 1px solid #005fb5;
 	}
 	
 	form#newTicket div {

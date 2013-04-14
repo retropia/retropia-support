@@ -37,7 +37,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
    
    	a:hover {
    		text-decoration: none;
-   		color: #d85656;
+   		color: #005588;
    	}
    
    img {
@@ -50,11 +50,11 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
    }
    
    	p a {
-	   	color: #e66565;
+	   	color: #006fbb;
    	}
    
    .button {
-	   background: #e66565;
+	   background: #006fbb;
 	   -webkit-border-radius: 4px;
 	   -moz-border-radius: 4px;
 	   -o-border-radius: 4px;
@@ -62,7 +62,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
 	   display: inline-block;
 	   padding: 7px 12px;
 	   color: #fff;
-	   text-shadow: 1px 1px rgb(202,71,71);
+	   text-shadow: 1px 1px rgb(0,81,157);
 	   font-size: 0.786em;
 	   font-weight: bold;
 	   text-transform: uppercase;
@@ -76,7 +76,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
    }
    
 	   .button:hover {
-		   background: #d85656;
+		   background: #005588;
 		   color: #fff;
 	   }
 	  
@@ -132,9 +132,9 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
 	}
 	
 	header {
-		background: #e66565;
+		background: #006fbb;
 		color: #fff;
-		text-shadow: 1px 1px rgb(202,71,71);
+		text-shadow: 1px 1px rgb(0,81,157);
 		height: 48px;
 		padding: 0 20px;
 		position: relative;
@@ -179,7 +179,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
 				}
 				
 				#topNav li a:hover {
-					background: #d85656;
+					background: #005588;
 				}
 				
 				#topNav li.active a:hover {
@@ -381,8 +381,12 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
 			}
 			
 			.ticket li a.webTicket {
-				color: #e66565;
+				color: #006fbb;
 				font-weight: bold;
+			}
+
+			.ticket li a.webTicket:hover {
+				color: #005588;
 			}
 			
 		.ticket .ticketStatus {
@@ -464,7 +468,7 @@ html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,addre
 	.ticketStatus {
 		text-transform: uppercase;
 		font-weight: bold;
-		color: #cb2020;
+		color: #006fbb;
 	}
 	
 	.green {
