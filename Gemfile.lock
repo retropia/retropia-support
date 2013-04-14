@@ -1,0 +1,33 @@
+GIT
+  remote: git://github.com/nessche/net-ssh.git
+  revision: 21dde273463f5aae11dcad34dfb3feb08dc81375
+  specs:
+    net-ssh (2.5.1)
+      jruby-pageant (>= 1.0.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    capistrano (2.14.2)
+      highline
+      net-scp (>= 1.0.0)
+      net-sftp (>= 2.0.0)
+      net-ssh (>= 2.0.14)
+      net-ssh-gateway (>= 1.1.0)
+    capistrano-php (1.0.0)
+    highline (1.6.17)
+    jruby-pageant (1.1.1)
+    net-scp (1.0.4)
+      net-ssh (>= 1.99.1)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh-gateway (1.1.0)
+      net-ssh (>= 1.99.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  capistrano
+  capistrano-php
+  net-ssh!
